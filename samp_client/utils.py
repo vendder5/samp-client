@@ -26,16 +26,15 @@ def encode_bytes(*args):
     integer values are encoded into their char values
     :return: bytestring representing all arguments joined together
     """
-    result = b''
+    result = bytearray()
     for arg in args:
         if isinstance(arg, bytes):
-            result += arg
+            result.extend(arg)
         elif isinstance(arg, str):
-            result += bytes(arg, ENCODING)
+            result.extend(arg.encode(ENCODING))
         elif isinstance(arg, int):
-            result += bytes([arg])
-    return result
-
+            result.extend(arg.to_bytes(1, byteorder='little'))
+    return bytes(result)
 
 def decode_int(data):
     """ Decodes integer from byte string """
