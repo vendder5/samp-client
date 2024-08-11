@@ -52,8 +52,12 @@ def rcon(client):
         command = input('RCON: ')
         if not command:
             return
-        for line in client.send_rcon_command(command):
-            print(line)
+        try:
+            response = client.send_rcon_command(command)
+            for line in response:
+                print(line)
+        except Exception as e:
+            print(f"{e}")
 
 
 def main(args):
